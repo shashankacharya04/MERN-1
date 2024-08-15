@@ -29,15 +29,12 @@ const EmployeeList = () => {
       sortedVal = employees.sort((a, b) => a.email.localeCompare(b.email));
       setEmployees([...sortedVal]);
     }
-    // if ((type = "date")) {
-    //   sortedVal = employees.sort((a, b) => {
-    //     const adate = JSON.stringify(a.date);
-    //     const bdate = JSON.stringify(b.date);
-
-    //     adate.localeCompare(bdate);
-    //   });
-    //   setEmployees([...sortedVal]);
-    // }
+    if ((type = "date")) {
+      sortedVal = employees.sort((a, b) => {
+        new Date(a.date).localeCompare(new Date(b.date));
+      });
+      setEmployees([...sortedVal]);
+    }
   };
   //searching logics
   const searchSubmit = (e) => {
@@ -82,7 +79,7 @@ const EmployeeList = () => {
           Total Employees :{employees.length}{" "}
         </span>
       </form>
-      <table className="table border border-gray-600">
+      <table className="table border border-gray-600 skeleton">
         <thead>
           <tr className="text-purple-600">
             <th>Image</th>

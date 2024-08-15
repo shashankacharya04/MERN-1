@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CheckBox from "./Checkbox";
 import useHandleSendImg from "../hooks/useHandleSendImg";
 import useCreateEmployee from "../hooks/useCreateEmployee";
@@ -19,9 +19,13 @@ const CreateEmployee = () => {
     handleSendImg(e);
     console.log("image url", imageUrl);
   }
+  useEffect(() => {
+    setInputs({ ...inputs, image: imageUrl });
+  }, [imageUrl]);
+  console.log("image insdie iseEffect", inputs);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setInputs({ ...inputs, image: imageUrl });
+
     console.log("inputs", inputs);
     const val = handleInputError(inputs, "create");
     if (val) {
@@ -43,24 +47,26 @@ const CreateEmployee = () => {
 
   return (
     <div className="flex flex-col items-center justify-center  ">
-      <div className="p-3 px-20   bg-gray-300 rounded-md  bg-opacity-20 border border-gray-100">
+      <div className="p-3 px-20   bg-gray-300 rounded-md  bg-opacity-20 border border-gray-100 ">
         <h1 className="text-2xl font-semibold text-center text-gray-300">
           Create Employee
         </h1>
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-3 m-3">
-            <div className="avatar">
-              <div className="w-24 rounded ml-40">
-                <img src={imageUrl} />
+            {imageUrl && (
+              <div className="avatar">
+                <div className="w-24 rounded-full ml-40">
+                  <img src={imageUrl} />
+                </div>
               </div>
-            </div>
+            )}
+
             <div>
               <label className="form-control w-full max-w-xs">
                 <input
                   type="file"
                   className="file-input file-input-bordered w-full max-w-xs"
                   onChange={imageSubission}
-                  onclick="this.value=null;"
                 />
                 <div className="label"></div>
               </label>
@@ -95,6 +101,7 @@ const CreateEmployee = () => {
 
           <div className="flex gap-4 m-2">
             <div>
+              <label className="">Add Mobile Number</label>
               <input
                 type="text"
                 className="w-full input input-bordered h-10"
@@ -107,6 +114,7 @@ const CreateEmployee = () => {
             </div>
             {/* mobile */}
             <div>
+              <label className="">Add designation</label>
               <select
                 onClick={(e) =>
                   setInputs({ ...inputs, designation: e.target.value })
@@ -125,18 +133,24 @@ const CreateEmployee = () => {
           </div>
 
           <div className="flex gap-4 m-2">
-            <CheckBox
-              handleCheckboxChange={handleCheckboxChange}
-              selectedGender={inputs.gender}
-            />
-            <div>
+            <div className="flex flex-col">
+              <label>Select gender </label>
+              <CheckBox
+                handleCheckboxChange={handleCheckboxChange}
+                selectedGender={inputs.gender}
+              />
+            </div>
+
+            <div className="mt-1 ml-4">
+              <label>Choose course</label>
+              <br />
               <label>
                 {" "}
                 <input
                   type="radio"
                   value="MCA"
                   name="radio-2"
-                  className="radio "
+                  className="radio  "
                   onChange={(e) =>
                     setInputs({ ...inputs, course: e.target.value })
                   }

@@ -24,7 +24,9 @@ const NavBar = () => {
             </svg>
           </div>
         </div>
-        <a className="btn btn-ghost text-xl">DASHBOARD</a>
+        <Link to="/dashboard" className="btn btn-ghost text-xl">
+          DASHBOARD
+        </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
@@ -37,7 +39,10 @@ const NavBar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <button className="btn " onClick={() => logout()}>
+        <button
+          className="btn  btn-outline btn-secondary "
+          onClick={() => logout()}
+        >
           logout
         </button>
       </div>
